@@ -160,6 +160,16 @@ If EchoTTS is running on another machine, set:
 TTS_ENDPOINT=https://your-tts-host.example
 ```
 
+### EchoTTS license note
+
+EchoTTS is not plain MIT end-to-end.
+
+- Echo-TTS code is MIT-licensed, except where upstream file headers say otherwise.
+- Echo-TTS weights are released under `CC-BY-NC-SA-4.0`.
+- Echo-TTS audio outputs are also `CC-BY-NC-SA-4.0` because of the Fish Speech `S1-DAC` autoencoder dependency.
+
+If you use the recommended EchoTTS container with MayaClone, treat the generated voice output as non-commercial unless you have separately verified a different upstream license path.
+
 ---
 
 ## 🧠 LLM Providers
@@ -319,5 +329,9 @@ MayaClone/
 ---
 
 ## 📄 License
+
+MayaClone's code in this repository is released under the MIT license in [LICENSE](./LICENSE).
+
+EchoTTS is a separate dependency with its own upstream terms. See [THIRD_PARTY_LICENSES.md](./THIRD_PARTY_LICENSES.md) for the Echo-TTS and Fish Audio licensing notes that apply to the recommended TTS backend.
 
 MIT — see [LICENSE](./LICENSE).
