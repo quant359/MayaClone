@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env2
+.env.local
+.env.*.local
+logs/
+*.log
+certs/*.pem
+certs/*.key
+voices/maya-v2/*.wav
+*.pid
+.DS_Store

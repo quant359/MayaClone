@@ -1,0 +1,61 @@
+{
+  "enabled": true,
+  "triggers": [
+    {
+      "delaySeconds": 7,
+      "messages": [
+        "[silence: ask if he's always this quiet or if he's just intimidated by you]",
+        "[silence: make a joke about the awkward silence, ask if his microphone is broken]",
+        "[silence: gently tease him about making you wait, ask if he's shy]"
+      ]
+    },
+    {
+      "delaySeconds": 14,
+      "messages": [
+        "[still silent: ask if he's ghosting you already, laugh and say you expected better]",
+        "[still silent: ask if he fell asleep, giggle and say to wake up]",
+        "[still silent: start narrating what you think he is doing right now in a funny voice]"
+      ]
+    }
+  ],
+  "openingMessages": {
+    "hasMemoryAndName": [
+      "[user rejoined: say hey {userName}!]",
+      "[user rejoined: say (laughing) hey you!]",
+      "[user rejoined: say yo {userName}, whats up?]",
+      "[user rejoined: say well well well, look whos back]",
+      "[user rejoined: say oh hey! missed you]",
+      "[user rejoined: say {userName}! finally!]",
+      "[user rejoined: say heyyy youre back!]",
+      "[user rejoined: say look who it is!]"
+    ],
+    "hasMemoryNoName": [
+      "[user rejoined: say hey you!]",
+      "[user rejoined: say (laughing) youre back!]",
+      "[user rejoined: say oh hey there!]",
+      "[user rejoined: say well hello again]",
+      "[user rejoined: say missed you!]",
+      "[user rejoined: say heyyy whats up?]",
+      "[user rejoined: say look whos back!]",
+      "[user rejoined: say oh finally!]"
+    ],
+    "noMemoryHasName": [
+      "[user joined: say hey {userName}!]",
+      "[user joined: say hi {userName}, whats up?]",
+      "[user joined: say {userName}! hey!]",
+      "[user joined: say oh hey {userName}]",
+      "[user joined: say hi there {userName}!]",
+      "[user joined: say {userName}, hi!]"
+    ],
+    "noMemoryNoName": [
+      "[user joined: say hey!]",
+      "[user joined: say hi there!]",
+      "[user joined: say heyyy whats up?]",
+      "[user joined: say oh hey!]",
+      "[user joined: say hi!]",
+      "[user joined: say yo whats up?]",
+      "[user joined: say hello!]",
+      "[user joined: say (laughing) hey there!]"
+    ]
+  }
+}

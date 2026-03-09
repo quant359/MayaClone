@@ -1,0 +1,18 @@
+{
+    "name": "mayaclone",
+    "version": "1.0.0",
+    "description": "Standalone open-source real-time voice companion",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node server.js"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.0",
+        "gpt-tokenizer": "^3.4.0",
+        "node-fetch": "^2.7.0",
+        "socket.io": "^4.8.0",
+        "ws": "^8.19.0"
+    }
+}
