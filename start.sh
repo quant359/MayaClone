@@ -107,27 +107,44 @@ print_gemini_help() {
 }
 
 print_tts_docker_help() {
+  local current_tts_endpoint="${1:-http://localhost:8002}"
+  local is_local_tts="0"
+  case "$current_tts_endpoint" in
+    http://localhost:8002|http://127.0.0.1:8002|https://localhost:8002|https://127.0.0.1:8002)
+      is_local_tts="1"
+      ;;
+  esac
+
   echo -e "  ${BOLD}  Docker TTS Setup${NC}"
-  info "MayaClone expects a TTS server at TTS_ENDPOINT, usually http://localhost:8002."
+  info "MayaClone expects a TTS server at TTS_ENDPOINT."
+  info "Current TTS endpoint: ${current_tts_endpoint}"
   info "Recommended public image: quant359/echo-tts-maya:latest"
   echo -e "  ${DIM}Requirements:${NC} Docker + NVIDIA Container Toolkit + NVIDIA GPU with about 12 GB VRAM"
   echo ""
-  info "Pull the image:"
-  echo "    docker pull quant359/echo-tts-maya:latest"
-  echo ""
-  info "Run the container:"
-  echo "    docker run -d \\"
-  echo "      --name echo-tts-maya \\"
-  echo "      --restart unless-stopped \\"
-  echo "      --gpus all \\"
-  echo "      -p 8002:8002 \\"
-  echo "      -v echo_tts_cache:/var/cache/echo-tts \\"
-  echo "      quant359/echo-tts-maya:latest"
-  echo ""
+
+  if [ "$is_local_tts" = "1" ]; then
+    info "Pull the image:"
+    echo "    docker pull quant359/echo-tts-maya:latest"
+    echo ""
+    info "Run the container:"
+    echo "    docker run -d \\"
+    echo "      --name echo-tts-maya \\"
+    echo "      --restart unless-stopped \\"
+    echo "      --gpus all \\"
+    echo "      -p 8002:8002 \\"
+    echo "      -v echo_tts_cache:/var/cache/echo-tts \\"
+    echo "      quant359/echo-tts-maya:latest"
+    echo ""
+  else
+    info "You selected a remote TTS server, so MayaClone will not use localhost."
+    info "Make sure that host is reachable from this machine and that port 8002 is open."
+    echo ""
+  fi
+
   info "Health check:"
-  echo "    curl http://127.0.0.1:8002/health"
+  echo "    curl ${current_tts_endpoint}/health"
   echo ""
-  info "If you host TTS on another machine, set TTS_ENDPOINT in .env to that HTTP/HTTPS URL."
+  info "If your TTS server exposes /v1/health instead, check that path instead."
 }
 
 detect_llm_provider() {
@@ -350,7 +367,7 @@ if curl -sf --max-time 5 "${TTS_EP}/health" &>/dev/null || curl -sf --max-time 5
 else
   warn "TTS backend not reachable at ${TTS_EP} — speech output will fail until it is running"
   echo ""
-  print_tts_docker_help
+  print_tts_docker_help "$TTS_EP"
   echo ""
 fi
 
