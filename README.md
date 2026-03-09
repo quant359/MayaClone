@@ -179,10 +179,12 @@ MayaClone talks to any OpenAI-compatible chat completions API. The setup wizard 
 | # | Provider | Base URL | Notes |
 |---|----------|----------|-------|
 | 1 | **OpenRouter** | `https://openrouter.ai/api/v1` | Wide model selection |
-| 2 | **Groq** | `https://api.groq.com/openai/v1` | Free tier, fast inference |
+| 2 | **Groq** | `https://api.groq.com/openai/v1` | Lowest latency option, but the free tier has limited usage |
 | 3 | **OpenAI** | `https://api.openai.com/v1` | GPT-4o and friends |
 | 4 | **Gemini** | `https://generativelanguage.googleapis.com/v1beta/openai` | Google's OpenAI-compatible endpoint |
 | 5 | **Custom** | your URL | Ollama, vLLM, or any compatible server |
+
+If you want the lowest latency, use Groq. If you want broader model choice or looser limits, use OpenRouter.
 
 The default setup uses Groq with `moonshotai/kimi-k2-instruct-0905`.
 
