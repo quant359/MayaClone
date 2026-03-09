@@ -6,15 +6,15 @@
 
 # 🎙️ MayaClone
 
-**Open-source, real-time voice companion that talks like a real person.**
+**Open-source voice chat app built to clone Sesame's Maya experience.**
 
-MayaClone is a fully self-hostable voice chat app that clones Sesame's "Maya" experience. You speak into your browser — Maya listens, thinks, and talks back with natural, expressive speech. The whole pipeline runs locally on your machine with a single command.
+MayaClone is a self-hosted browser voice app. You talk, it transcribes with Deepgram, generates replies with your LLM, and speaks back through EchoTTS with Maya's voice.
 
 > **Mic → Deepgram STT → LLM → Echo-TTS → Speaker** — all streamed in real time.
 
 ---
 
-## ✨ What Makes This Different
+## ✨ What It Does
 
 | Feature | Details |
 |---|---|
@@ -26,7 +26,7 @@ MayaClone is a fully self-hostable voice chat app that clones Sesame's "Maya" ex
 | **Configurable persona** | Maya's personality lives in a single markdown file you can edit |
 | **Conversation memory** | Remembers your name and conversation history across sessions (stored in browser) |
 | **Silence awareness** | Maya notices when you go quiet and initiates conversation naturally |
-| **One-command setup** | Interactive `start.sh` wizard handles everything |
+| **One-command setup** | `./start.sh` creates `.env`, checks TTS, and starts the app |
 
 ---
 
@@ -58,42 +58,41 @@ MayaClone is a fully self-hostable voice chat app that clones Sesame's "Maya" ex
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Install
 
-### Prerequisites
+### 1. What you need
 
 - **Node.js** 18+
 - **Deepgram API key** — [get one free](https://deepgram.com)
 - **LLM API key** — Groq (free tier), OpenRouter, OpenAI, Gemini, or any OpenAI-compatible endpoint
-- **Echo-TTS** — Docker container with an NVIDIA GPU (12 GB+ VRAM)
+- **EchoTTS** — running locally or on another machine
 
-### 1. Clone & Run
+### 2. Clone and start MayaClone
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/MayaClone.git
+git clone https://github.com/quant359/MayaClone.git
 cd MayaClone
 ./start.sh
 ```
 
-That's it. The interactive launcher walks you through everything:
+`./start.sh` is the normal setup path. It asks:
 
-```
-  ╔══════════════════════════════════════════╗
-  ║          🎙️  MayaClone v1.0              ║
-  ╚══════════════════════════════════════════╝
+- `Deepgram key`:
+  Paste your Deepgram API key for speech-to-text.
+- `Provider [1-5]`:
+  Pick your LLM provider. `2` is Groq. `5` is any OpenAI-compatible endpoint.
+- `... key`:
+  Paste the API key for the provider you chose.
+- `Model`:
+  Press Enter to keep the default model, or type your own.
+- `TTS Endpoint`:
+  Use `http://localhost:8002` for a local EchoTTS container, or paste a remote URL like `https://your-tts-host`.
+- `Generate self-signed SSL certs?`:
+  Optional. Say `y` only if you need HTTPS for mic access from another device.
 
-  ✓ Created .env from template
-  ? Deepgram key: ••••••••••
-  ? Provider [1-5]: 2  (Groq)
-  ? Groq key: ••••••••••
-  ✓ Groq configured
-  ✓ TTS backend reachable at http://localhost:8002
-  ✓ All checks passed
+After that, the launcher checks the TTS server and starts MayaClone.
 
-  🚀  Starting MayaClone on port 3000...
-```
-
-### 2. Open in Browser
+### 3. Open it
 
 ```
 http://localhost:3000
@@ -103,20 +102,20 @@ Tap the orb to start talking.
 
 ---
 
-## 🔊 Echo-TTS Setup
+## 🔊 EchoTTS Setup
 
-MayaClone uses **Echo-TTS** for speech synthesis. The recommended Docker image ships with the Maya voice baked in.
+MayaClone expects an EchoTTS-compatible backend at `TTS_ENDPOINT`. The recommended container already includes the Maya voice.
 
-### Requirements
+### Docker requirements
 
 - Docker
 - NVIDIA Container Toolkit (`nvidia-docker`)
 - NVIDIA GPU with ≥12 GB VRAM
-- Host driver compatible with CUDA 12.8
+- Host driver that supports **CUDA 12.8** containers
 
-### Run the Container
+### Start EchoTTS on a 24 GB GPU
 
-**24 GB GPU** (RTX 3090 / 4090 — higher quality):
+Use this for cards like a `3090` or `4090`.
 
 ```bash
 docker run -d \
@@ -129,7 +128,9 @@ docker run -d \
   quant359/echo-tts-maya:latest
 ```
 
-**12 GB GPU** (RTX 3060 / 4060 — lower VRAM):
+### Start EchoTTS on a 12 GB GPU
+
+Use this for cards like a `3060` or `4060`.
 
 ```bash
 docker run -d \
@@ -142,16 +143,18 @@ docker run -d \
   quant359/echo-tts-maya:latest
 ```
 
-### Verify
+### Check that EchoTTS is up
 
 ```bash
 curl http://127.0.0.1:8002/health
 # → {"status":"ok"}
 ```
 
-### Remote TTS
+If that works, leave `TTS_ENDPOINT=http://localhost:8002` in MayaClone.
 
-If your TTS server is on another machine, just set the endpoint in `.env`:
+### Use a remote TTS server
+
+If EchoTTS is running on another machine, set:
 
 ```env
 TTS_ENDPOINT=https://your-tts-host.example
@@ -171,7 +174,7 @@ MayaClone talks to any OpenAI-compatible chat completions API. The setup wizard 
 | 4 | **Gemini** | `https://generativelanguage.googleapis.com/v1beta/openai` | Google's OpenAI-compatible endpoint |
 | 5 | **Custom** | your URL | Ollama, vLLM, or any compatible server |
 
-The default recommended model is `moonshotai/kimi-k2-instruct-0905` on Groq.
+The default setup uses Groq with `moonshotai/kimi-k2-instruct-0905`.
 
 ---
 
@@ -222,18 +225,20 @@ All configuration lives in `.env`. The launcher creates it from `.env.example` o
 
 ### TTS Tuning
 
-These control how text is chunked and sent to Echo-TTS for optimal streaming latency:
+These are the current EchoTTS defaults used by MayaClone:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `TTS_BLOCK_SIZES` | `212,212,212` | Denoising block sizes |
-| `TTS_NUM_STEPS` | `25,25,25` | Denoising steps per block |
-| `TTS_FIRST_CHUNK_BLOCK_SIZES` | `32,128,480` | Smaller blocks for first chunk (faster TTFB) |
-| `TTS_FIRST_CHUNK_NUM_STEPS` | `6,12,20` | Fewer steps for first chunk |
+| `TTS_BLOCK_SIZES` | `32,128,480` | Default denoising block sizes |
+| `TTS_NUM_STEPS` | `15,20,20` | Default denoising steps per block |
+| `TTS_FIRST_CHUNK_BLOCK_SIZES` | `32,128,480` | First chunk block sizes |
+| `TTS_FIRST_CHUNK_NUM_STEPS` | `6,12,20` | First chunk step profile |
 | `TTS_TOKEN_TARGETS` | `15,40,50,...,61` | Token count targets per TTS chunk |
+| `TTS_CHUNK_FLEX` | `1.0` | How far chunking can stretch for natural boundaries |
 | `TTS_CFG_SCALE_TEXT` | `2.5` | Text classifier-free guidance scale |
 | `TTS_CFG_SCALE_SPEAKER` | `5` | Speaker classifier-free guidance scale |
 | `TTS_TRUNCATION_FACTOR` | `0.9` | Audio truncation factor |
+| `TTS_SPEAKER_KV_SCALE` | `1` | Speaker KV scaling |
 | `TTS_SEED` | `0` | Seed for deterministic generation |
 | `DEBUG_TTS` | `0` | Set to `1` for verbose TTS logging |
 
@@ -307,22 +312,9 @@ MayaClone/
 │   └── maya.md             # Maya's personality prompt
 ├── config/
 │   └── silence-triggers.json  # Silence detection + opening messages
-├── voices/
-│   └── maya-v2/            # Voice reference audio
 ├── certs/                  # Auto-generated SSL certs (gitignored)
 └── logs/                   # Runtime logs (gitignored)
 ```
-
----
-
-## 🚫 Do Not Commit
-
-These are in `.gitignore` and should never be checked in:
-
-- `.env` — contains your API keys
-- `certs/` — generated SSL certificates
-- `logs/` — runtime logs
-- `node_modules/` — dependencies
 
 ---
 
