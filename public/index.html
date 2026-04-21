@@ -156,6 +156,10 @@
       white-space: nowrap;
     }
 
+    .header-actions {
+      display: none;
+    }
+
     /* Session memory controls */
     .memory-hint {
       max-width: 340px;
@@ -194,6 +198,220 @@
     .memory-reset:hover {
       background: rgba(255, 255, 255, 0.08);
       border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .memory-reset.confirming {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.5);
+      color: rgba(239, 68, 68, 1);
+      animation: pulse-border 0.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse-border {
+      from { border-color: rgba(239, 68, 68, 0.3); }
+      to { border-color: rgba(239, 68, 68, 0.7); }
+    }
+
+    .memory-reset.cleared {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: rgba(16, 185, 129, 1);
+      pointer-events: none;
+    }
+
+    .system-prompt-textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: rgba(245, 245, 250, 0.92);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      font-size: 12.5px;
+      line-height: 1.6;
+      padding: 12px 14px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .system-prompt-textarea:focus {
+      border-color: rgba(139, 92, 246, 0.5);
+    }
+
+    .settings-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 12, 0.78);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 60;
+    }
+
+    .settings-panel {
+      width: min(720px, 100%);
+      max-height: min(88vh, 920px);
+      overflow: auto;
+      background: linear-gradient(180deg, rgba(16, 20, 31, 0.98), rgba(11, 14, 23, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.46);
+      padding: 22px;
+    }
+
+    .settings-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .settings-subtitle {
+      color: rgba(245, 245, 250, 0.62);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .settings-section {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.025);
+      margin-bottom: 14px;
+    }
+
+    .settings-section h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(245, 245, 250, 0.92);
+      margin-bottom: 12px;
+    }
+
+    .settings-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .settings-row.single {
+      grid-template-columns: 1fr;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-group label {
+      color: rgba(245, 245, 250, 0.74);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .field-group input,
+    .field-group select {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 13px;
+      padding: 11px 12px;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .field-group input:focus,
+    .field-group select:focus {
+      border-color: rgba(110, 231, 255, 0.52);
+      box-shadow: 0 0 0 1px rgba(110, 231, 255, 0.22);
+    }
+
+    .field-inline {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .field-inline input {
+      flex: 1;
+    }
+
+    .secondary-btn,
+    .primary-btn {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(245, 245, 250, 0.86);
+    }
+
+    .primary-btn {
+      background: linear-gradient(90deg, rgba(27, 186, 229, 0.22), rgba(226, 62, 143, 0.22));
+      color: rgba(245, 245, 250, 0.96);
+    }
+
+    .secondary-btn:hover,
+    .primary-btn:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .settings-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .settings-actions-left,
+    .settings-actions-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .settings-status {
+      min-height: 18px;
+      font-size: 12px;
+      color: rgba(245, 245, 250, 0.62);
+      margin-top: 12px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(245, 245, 250, 0.88);
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--listening);
+    }
+
+    .settings-note {
+      color: rgba(245, 245, 250, 0.56);
+      font-size: 12px;
+      line-height: 1.5;
     }
 
     .controls-row {
@@ -842,7 +1060,7 @@
     .transcript-area {
       padding: 10px 0 14px 0;
       border-top: 1px solid var(--border);
-      height: 108px;
+      min-height: 108px;
       flex: 0 0 auto;
       opacity: 1;
       visibility: visible;
@@ -876,6 +1094,84 @@
     .transcript-box::-webkit-scrollbar {
       width: 0;
       height: 0;
+    }
+
+    .text-chat-box {
+      width: min(380px, 100%);
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(22, 22, 31, 0.92) 0%, rgba(13, 13, 20, 0.78) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 10px 12px 12px 12px;
+      min-height: 78px;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .text-chat-label {
+      width: 100%;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(244, 244, 245, 0.72);
+      margin: 0 0 8px 0;
+    }
+
+    .text-chat-input {
+      width: 100%;
+      min-height: 54px;
+      resize: none;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(245, 245, 250, 0.94);
+      font: inherit;
+      font-size: 15px;
+      line-height: 1.35;
+      padding: 10px 12px;
+      outline: none;
+    }
+
+    .text-chat-input::placeholder {
+      color: rgba(245, 245, 250, 0.38);
+    }
+
+    .text-chat-input:focus {
+      border-color: rgba(16, 185, 129, 0.42);
+      box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.15);
+    }
+
+    .text-chat-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .text-chat-hint {
+      font-size: 11px;
+      color: rgba(245, 245, 250, 0.48);
+    }
+
+    .text-chat-send {
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      background: rgba(16, 185, 129, 0.10);
+      color: rgba(16, 185, 129, 0.92);
+      border-radius: 10px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .text-chat-send:disabled {
+      opacity: 0.45;
+      cursor: default;
     }
 
     .transcript-box::before {
@@ -1320,6 +1616,7 @@
       <div class="memory-actions" id="memoryActions">
         <button class="memory-reset" id="setNameBtn" type="button" onclick="setName()">Set name</button>
         <button class="memory-reset" id="clearMemoryBtn" type="button" onclick="clearContext()">Clear Memory</button>
+        <button class="memory-reset" id="settingsBtn" type="button">⚙ LLM Settings</button>
       </div>
     </main>
 
@@ -1353,12 +1650,21 @@
           <path d="M21 9l-5 5"></path>
         </svg>
       </button>
+      <button class="control-btn" id="textModeBtn" type="button" title="Enable text input" aria-pressed="false">Text</button>
     </div>
 
     <section class="transcript-area inactive" id="transcriptArea">
       <div class="transcript-box empty" id="transcriptBox">
         <p class="transcript-label" id="transcriptLabel">You</p>
         <p class="transcript-text" id="userTranscript">…</p>
+      </div>
+      <div class="text-chat-box hidden" id="textChatBox">
+        <p class="text-chat-label">Text Input</p>
+        <textarea class="text-chat-input" id="textChatInput" placeholder="Type a message to Maya…"></textarea>
+        <div class="text-chat-actions">
+          <span class="text-chat-hint">Press Enter to send</span>
+          <button class="text-chat-send" id="textChatSendBtn" type="button">Send</button>
+        </div>
       </div>
     </section>
 
@@ -1368,6 +1674,259 @@
       </svg>
       End Session
     </button>
+  </div>
+
+  <div class="settings-modal hidden" id="settingsModal">
+    <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="settings-title" id="settingsTitle">Provider Profiles</div>
+      <p class="settings-subtitle">
+        Selecting a profile updates the fields below. Press Save &amp; Activate to apply it.
+      </p>
+
+      <section class="settings-section">
+        <h2>Provider Profiles</h2>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="profileSelect">Env</label>
+            <select id="profileSelect"></select>
+          </div>
+          <div class="field-group">
+            <label>&nbsp;</label>
+            <div class="field-inline">
+              <input id="profileNameInput" type="text" placeholder="Save current as…" />
+              <button class="secondary-btn" id="saveProfileBtn" type="button">Save</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>LLM Provider</h2>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="providerKind">Provider</label>
+            <select id="providerKind"></select>
+          </div>
+          <div class="field-group">
+            <label for="baseUrlInput">Provider URL (Base)</label>
+            <input id="baseUrlInput" type="text" placeholder="https://api.groq.com/openai/v1" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="apiKeyInput">API Key</label>
+            <div class="field-inline">
+              <input id="apiKeyInput" type="password" autocomplete="off" />
+              <button class="secondary-btn" id="toggleApiKeyBtn" type="button">Show</button>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="modelInput">Model Name</label>
+            <input id="modelInput" type="text" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="maxOutputTokensInput">Max Output Tokens</label>
+            <input id="maxOutputTokensInput" type="number" min="1" step="1" />
+          </div>
+          <div class="field-group">
+            <label for="maxContextTokensInput">Max Context Tokens</label>
+            <input id="maxContextTokensInput" type="number" min="1" step="1" />
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Sampling</h2>
+        <p class="settings-note">Use 0 to omit a field and let the provider choose its default.</p>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="temperatureInput">temperature</label>
+            <input id="temperatureInput" type="number" step="0.01" />
+          </div>
+          <div class="field-group">
+            <label for="repetitionPenaltyInput">repetition_penalty</label>
+            <input id="repetitionPenaltyInput" type="number" step="0.01" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="topPInput">top_p</label>
+            <input id="topPInput" type="number" step="0.01" />
+          </div>
+          <div class="field-group">
+            <label for="topKInput">top_k</label>
+            <input id="topKInput" type="number" step="1" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="minPInput">min_p</label>
+            <input id="minPInput" type="number" step="0.01" />
+          </div>
+          <div class="field-group">
+            <label for="presencePenaltyInput">presence_penalty</label>
+            <input id="presencePenaltyInput" type="number" step="0.01" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="frequencyPenaltyInput">frequency_penalty</label>
+            <input id="frequencyPenaltyInput" type="number" step="0.01" />
+          </div>
+        </div>
+        <div class="settings-row hidden" id="disableThinkingRow">
+          <div class="field-group">
+            <label for="disableThinkingInput">Disable Thinking</label>
+            <label class="checkbox-row">
+              <input id="disableThinkingInput" type="checkbox" />
+              <span>Send chat_template_kwargs.enable_thinking=false</span>
+            </label>
+          </div>
+        </div>
+        <p class="settings-note">
+          Suggested starting point: repetition_penalty 1.1–1.2, temperature 0.6–0.8, top_k around 40, top_p around 0.95, min_p around 0.1.
+        </p>
+      </section>
+
+      <section class="settings-section">
+        <h2>System Prompt</h2>
+        <div class="settings-row">
+          <div class="field-group" style="width:100%">
+            <label for="systemPromptInput">Maya's System Prompt</label>
+            <textarea id="systemPromptInput" class="system-prompt-textarea" rows="16" spellcheck="false"></textarea>
+            <p class="settings-note">This prompt defines Maya's personality and behavior. Changes apply on the next conversation turn.</p>
+            <div style="margin-top:10px; display:flex; justify-content:flex-end;">
+              <button id="resetSystemPromptBtn" class="secondary-btn" type="button">Reset To maya.md</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Conversation</h2>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="silenceTriggersEnabled">Silence Triggers</label>
+            <label class="checkbox-row">
+              <input id="silenceTriggersEnabled" type="checkbox" />
+              <span>Enable follow-up prompts after silence</span>
+            </label>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="disableOpeningMessage">Opening Message</label>
+            <label class="checkbox-row">
+              <input id="disableOpeningMessage" type="checkbox" />
+              <span>Enable welcome message on call start</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Vox TTS</h2>
+        <p class="settings-note">These apply to Maya voice generation. Use 0 for default temperature to omit it and let Vox use its normal behavior.</p>
+        <div class="settings-row single">
+          <div class="field-group">
+            <label for="voxTtsEndpointInput">Vox TTS URL</label>
+            <input id="voxTtsEndpointInput" type="text" placeholder="http://192.168.2.206:8002" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="voxContinuationCacheEnabled">Continuation Cache</label>
+            <label class="checkbox-row">
+              <input id="voxContinuationCacheEnabled" type="checkbox" />
+              <span>Enable continuation cache for Vox chunks</span>
+            </label>
+          </div>
+          <div class="field-group">
+            <label for="voxSeamMsInput">Silence Between Chunks (ms)</label>
+            <input id="voxSeamMsInput" type="number" step="1" min="0" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="voxCfgInput">CFG</label>
+            <input id="voxCfgInput" type="number" step="0.01" />
+          </div>
+          <div class="field-group">
+            <label for="voxTempDefaultInput">Default temperature</label>
+            <input id="voxTempDefaultInput" type="number" step="0.01" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="voxCfg1WordInput">1 word CFG</label>
+            <input id="voxCfg1WordInput" type="number" step="0.01" />
+          </div>
+          <div class="field-group">
+            <label for="voxCfg2WordsInput">2 words CFG</label>
+            <input id="voxCfg2WordsInput" type="number" step="0.01" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="voxCfg3WordsInput">3 words CFG</label>
+            <input id="voxCfg3WordsInput" type="number" step="0.01" />
+          </div>
+          <div class="field-group">
+            <label for="voxCfg4WordsInput">4 words CFG</label>
+            <input id="voxCfg4WordsInput" type="number" step="0.01" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="voxTemp1WordInput">1 word temperature</label>
+            <input id="voxTemp1WordInput" type="number" step="0.01" />
+          </div>
+          <div class="field-group">
+            <label for="voxTemp2WordsInput">2 words temperature</label>
+            <input id="voxTemp2WordsInput" type="number" step="0.01" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="voxTemp3WordsInput">3 words temperature</label>
+            <input id="voxTemp3WordsInput" type="number" step="0.01" />
+          </div>
+          <div class="field-group">
+            <label for="voxTemp4WordsInput">4 words temperature</label>
+            <input id="voxTemp4WordsInput" type="number" step="0.01" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="voxChunkLength1Input">Length1 (tokens)</label>
+            <input id="voxChunkLength1Input" type="number" step="1" min="1" />
+          </div>
+          <div class="field-group">
+            <label for="voxChunkLength2Input">Length2 (tokens)</label>
+            <input id="voxChunkLength2Input" type="number" step="1" min="1" />
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="field-group">
+            <label for="voxChunkLength3Input">Length3 (tokens)</label>
+            <input id="voxChunkLength3Input" type="number" step="1" min="1" />
+          </div>
+        </div>
+      </section>
+
+      <div class="settings-actions">
+        <div class="settings-actions-left">
+          <button class="secondary-btn" id="closeSettingsBtn" type="button">Close</button>
+        </div>
+        <div class="settings-actions-right">
+          <button class="primary-btn" id="saveActivateBtn" type="button">Save &amp; Activate</button>
+        </div>
+      </div>
+
+      <div class="settings-status" id="settingsStatus"></div>
+    </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
@@ -1392,6 +1951,54 @@
     const controlsRow = $('controlsRow');
     const micBtn = $('micBtn');
     const aiBtn = $('aiBtn');
+    const textModeBtn = $('textModeBtn');
+    const textChatBox = $('textChatBox');
+    const textChatInput = $('textChatInput');
+    const textChatSendBtn = $('textChatSendBtn');
+    const settingsBtn = $('settingsBtn');
+    const settingsModal = $('settingsModal');
+    const profileSelect = $('profileSelect');
+    const profileNameInput = $('profileNameInput');
+    const providerKind = $('providerKind');
+    const baseUrlInput = $('baseUrlInput');
+    const apiKeyInput = $('apiKeyInput');
+    const toggleApiKeyBtn = $('toggleApiKeyBtn');
+    const modelInput = $('modelInput');
+    const maxOutputTokensInput = $('maxOutputTokensInput');
+    const maxContextTokensInput = $('maxContextTokensInput');
+    const temperatureInput = $('temperatureInput');
+    const repetitionPenaltyInput = $('repetitionPenaltyInput');
+    const topPInput = $('topPInput');
+    const topKInput = $('topKInput');
+    const minPInput = $('minPInput');
+    const presencePenaltyInput = $('presencePenaltyInput');
+    const frequencyPenaltyInput = $('frequencyPenaltyInput');
+    const disableThinkingRow = $('disableThinkingRow');
+    const disableThinkingInput = $('disableThinkingInput');
+    const systemPromptInput = $('systemPromptInput');
+    const resetSystemPromptBtn = $('resetSystemPromptBtn');
+    const silenceTriggersEnabled = $('silenceTriggersEnabled');
+    const disableOpeningMessage = $('disableOpeningMessage');
+    const voxCfgInput = $('voxCfgInput');
+    const voxTtsEndpointInput = $('voxTtsEndpointInput');
+    const voxContinuationCacheEnabled = $('voxContinuationCacheEnabled');
+    const voxSeamMsInput = $('voxSeamMsInput');
+    const voxCfg1WordInput = $('voxCfg1WordInput');
+    const voxCfg2WordsInput = $('voxCfg2WordsInput');
+    const voxCfg3WordsInput = $('voxCfg3WordsInput');
+    const voxCfg4WordsInput = $('voxCfg4WordsInput');
+    const voxTempDefaultInput = $('voxTempDefaultInput');
+    const voxTemp1WordInput = $('voxTemp1WordInput');
+    const voxTemp2WordsInput = $('voxTemp2WordsInput');
+    const voxTemp3WordsInput = $('voxTemp3WordsInput');
+    const voxTemp4WordsInput = $('voxTemp4WordsInput');
+    const voxChunkLength1Input = $('voxChunkLength1Input');
+    const voxChunkLength2Input = $('voxChunkLength2Input');
+    const voxChunkLength3Input = $('voxChunkLength3Input');
+    const saveProfileBtn = $('saveProfileBtn');
+    const saveActivateBtn = $('saveActivateBtn');
+    const closeSettingsBtn = $('closeSettingsBtn');
+    const settingsStatus = $('settingsStatus');
 
     // ─── State ────────────────────────────────────────────────────────────
     let socket = null;
@@ -1408,15 +2015,26 @@
     let isStoppingCall = false;
     let isMicMuted = false;
     let isAiMuted = false;
+    let isTextMode = false;
     let activeCallId = null;
 
     // Gapless playback
     let playbackCtx = null;
     let playbackGainNode = null;
     let playbackAnalyser = null;
+    let playbackProcessorNode = null;
+    let playbackWorkletNode = null;
     let playbackDataArray = null;
     let nextPlayTime = 0;
     let activeSources = [];
+    let playbackPcmQueue = [];
+    let playbackQueuedSamples = 0;
+    let playbackStarted = false;
+    let playbackUnderruns = 0;
+    let playbackStartupBufferSeconds = 0.12;
+    let playbackStartupChunkCount = 0;
+    let playbackStartupFirstChunkAt = 0;
+    let playbackReactiveDelayUntil = 0;
     let vadFlushTimer = null;
     let assistantFinished = false;
     let userName = '';
@@ -1428,6 +2046,11 @@
     let smoothedUserLevel = 0;
     let smoothedAssistantLevel = 0;
     let ambientPulseInterval = null;
+    let lastOrbVizAt = 0;
+    let lastAppliedRingStateKey = '';
+    let lastBlobScale = 1;
+    const STORAGE_TEXT_MODE = 'maya_text_mode';
+    let llmSettingsState = null;
 
     // ─── Local memory (browser storage) ──────────────────────────────────
     const STORAGE_CHAT_ID = 'maya_chat_id_v1';
@@ -1489,6 +2112,246 @@
       }
     }
 
+    function setSettingsStatus(message, isError = false) {
+      if (!settingsStatus) return;
+      settingsStatus.textContent = message || '';
+      settingsStatus.style.color = isError
+        ? 'rgba(248, 113, 113, 0.95)'
+        : 'rgba(245, 245, 250, 0.7)';
+    }
+
+    function parseNumericInput(input, fallback = 0) {
+      const raw = String(input?.value ?? '').trim().replace(',', '.');
+      if (!raw) return fallback;
+      const value = Number(raw);
+      return Number.isFinite(value) ? value : fallback;
+    }
+
+    function fillLlmSettingsForm(settings, voxTtsSettings = {}) {
+      providerKind.value = settings.provider_kind || 'openai_compatible';
+      baseUrlInput.value = settings.base_url || '';
+      apiKeyInput.value = settings.api_key || '';
+      modelInput.value = settings.model || '';
+      maxOutputTokensInput.value = String(settings.max_output_tokens ?? 1000);
+      maxContextTokensInput.value = String(settings.max_context_tokens ?? 128000);
+      temperatureInput.value = String(settings.temperature ?? 0);
+      repetitionPenaltyInput.value = String(settings.repetition_penalty ?? 0);
+      topPInput.value = String(settings.top_p ?? 0);
+      topKInput.value = String(settings.top_k ?? 0);
+      minPInput.value = String(settings.min_p ?? 0);
+      presencePenaltyInput.value = String(settings.presence_penalty ?? 0);
+      frequencyPenaltyInput.value = String(settings.frequency_penalty ?? 0);
+      if (disableThinkingInput) disableThinkingInput.checked = Boolean(settings.disable_thinking);
+      voxTtsEndpointInput.value = String(voxTtsSettings.vox_tts_endpoint ?? '');
+      voxContinuationCacheEnabled.checked = Boolean(voxTtsSettings.vox_continuation_cache_enabled);
+      voxSeamMsInput.value = String(voxTtsSettings.vox_seam_ms ?? 45);
+      voxCfgInput.value = String(voxTtsSettings.vox_cfg ?? 2);
+      voxCfg1WordInput.value = String(voxTtsSettings.vox_cfg_1_word ?? voxTtsSettings.vox_cfg ?? 2);
+      voxCfg2WordsInput.value = String(voxTtsSettings.vox_cfg_2_words ?? voxTtsSettings.vox_cfg ?? 2);
+      voxCfg3WordsInput.value = String(voxTtsSettings.vox_cfg_3_words ?? voxTtsSettings.vox_cfg ?? 2);
+      voxCfg4WordsInput.value = String(voxTtsSettings.vox_cfg_4_words ?? voxTtsSettings.vox_cfg ?? 2);
+      voxTempDefaultInput.value = String(voxTtsSettings.vox_temperature_default ?? 0);
+      voxTemp1WordInput.value = String(voxTtsSettings.vox_temp_1_word ?? 1.6);
+      voxTemp2WordsInput.value = String(voxTtsSettings.vox_temp_2_words ?? 1.4);
+      voxTemp3WordsInput.value = String(voxTtsSettings.vox_temp_3_words ?? 1.3);
+      voxTemp4WordsInput.value = String(voxTtsSettings.vox_temp_4_words ?? 1.2);
+      voxChunkLength1Input.value = String(voxTtsSettings.vox_chunk_length_1 ?? 10);
+      voxChunkLength2Input.value = String(voxTtsSettings.vox_chunk_length_2 ?? 28);
+      voxChunkLength3Input.value = String(voxTtsSettings.vox_chunk_length_3 ?? 42);
+    }
+
+    function collectLlmSettingsForm() {
+      return {
+        provider_kind: providerKind.value || 'openai_compatible',
+        base_url: baseUrlInput.value.trim(),
+        api_key: apiKeyInput.value,
+        model: modelInput.value.trim(),
+        max_output_tokens: parseNumericInput(maxOutputTokensInput, 1000),
+        max_context_tokens: parseNumericInput(maxContextTokensInput, 128000),
+        temperature: parseNumericInput(temperatureInput, 0),
+        repetition_penalty: parseNumericInput(repetitionPenaltyInput, 0),
+        top_p: parseNumericInput(topPInput, 0),
+        top_k: parseNumericInput(topKInput, 0),
+        min_p: parseNumericInput(minPInput, 0),
+        presence_penalty: parseNumericInput(presencePenaltyInput, 0),
+        frequency_penalty: parseNumericInput(frequencyPenaltyInput, 0),
+        disable_thinking: Boolean(disableThinkingInput?.checked),
+        vox_tts_endpoint: voxTtsEndpointInput.value.trim(),
+        vox_continuation_cache_enabled: Boolean(voxContinuationCacheEnabled?.checked),
+        vox_seam_ms: parseNumericInput(voxSeamMsInput, 45),
+        vox_cfg: parseNumericInput(voxCfgInput, 2),
+        vox_cfg_1_word: parseNumericInput(voxCfg1WordInput, 2),
+        vox_cfg_2_words: parseNumericInput(voxCfg2WordsInput, 2),
+        vox_cfg_3_words: parseNumericInput(voxCfg3WordsInput, 2),
+        vox_cfg_4_words: parseNumericInput(voxCfg4WordsInput, 2),
+        vox_temperature_default: parseNumericInput(voxTempDefaultInput, 0),
+        vox_temp_1_word: parseNumericInput(voxTemp1WordInput, 1.6),
+        vox_temp_2_words: parseNumericInput(voxTemp2WordsInput, 1.4),
+        vox_temp_3_words: parseNumericInput(voxTemp3WordsInput, 1.3),
+        vox_temp_4_words: parseNumericInput(voxTemp4WordsInput, 1.2),
+        vox_chunk_length_1: parseNumericInput(voxChunkLength1Input, 10),
+        vox_chunk_length_2: parseNumericInput(voxChunkLength2Input, 28),
+        vox_chunk_length_3: parseNumericInput(voxChunkLength3Input, 42),
+      };
+    }
+
+    function renderProfileOptions(state) {
+      if (!profileSelect) return;
+      profileSelect.innerHTML = '';
+      const profiles = Array.isArray(state?.profiles) ? state.profiles : [];
+      for (const option of profiles) {
+        const el = document.createElement('option');
+        el.value = option.id;
+        el.textContent = option.profile_name;
+        profileSelect.appendChild(el);
+      }
+      profileSelect.value = state?.active_profile_id || profiles[0]?.id || '';
+    }
+
+    function renderProviderOptions(state) {
+      providerKind.innerHTML = '';
+      const options = Array.isArray(state?.provider_options) ? state.provider_options : [{ id: 'openai_compatible', label: 'OpenAI-Compatible' }];
+      for (const option of options) {
+        const el = document.createElement('option');
+        el.value = option.id;
+        el.textContent = option.label;
+        providerKind.appendChild(el);
+      }
+    }
+
+    function shouldShowDisableThinking(settings) {
+      try {
+        const host = new URL(`${String(settings?.base_url || '').replace(/\/+$/, '')}/`).host.toLowerCase();
+        const model = String(settings?.model || '').trim();
+        return host === 'api.cloudflare.com' && model === '@cf/google/gemma-4-26b-a4b-it';
+      } catch {
+        return false;
+      }
+    }
+
+    function syncProviderSpecificUi(settings) {
+      const showDisableThinking = shouldShowDisableThinking(settings);
+      disableThinkingRow?.classList.toggle('hidden', !showDisableThinking);
+      if (!showDisableThinking && disableThinkingInput) {
+        disableThinkingInput.checked = false;
+      }
+    }
+
+    function applyProfileById(profileId) {
+      const profile = llmSettingsState?.profiles?.find(item => item.id === profileId);
+      if (!profile) return;
+      if (profileSelect) profileSelect.value = profile.id;
+      fillLlmSettingsForm(profile, llmSettingsState?.vox_tts_settings || {});
+      profileNameInput.value = profile.profile_name || '';
+      syncProviderSpecificUi(profile);
+      setSettingsStatus(`Loaded profile: ${profile.profile_name}`);
+    }
+
+    async function loadLlmSettingsState() {
+      const res = await fetch('/api/llm-settings');
+      if (!res.ok) throw new Error(`Settings load failed (${res.status})`);
+      const payload = await res.json();
+      llmSettingsState = payload;
+      renderProviderOptions(payload);
+      renderProfileOptions(payload);
+      fillLlmSettingsForm(payload.active_settings || {}, payload.vox_tts_settings || {});
+      if (silenceTriggersEnabled) silenceTriggersEnabled.checked = Boolean(payload.silence_triggers_enabled);
+      if (disableOpeningMessage) disableOpeningMessage.checked = !Boolean(payload.disable_opening_message);
+      syncProviderSpecificUi(payload.active_settings || {});
+      const activeProfile = payload.profiles?.find(item => item.id === payload.active_profile_id);
+      profileNameInput.value = activeProfile?.profile_name || '';
+      // Load system prompt
+      if (systemPromptInput && payload.system_prompt) {
+        systemPromptInput.value = payload.system_prompt;
+      }
+      return payload;
+    }
+
+    async function openSettingsModal() {
+      setSettingsStatus('Loading settings…');
+      settingsModal.classList.remove('hidden');
+      try {
+        await loadLlmSettingsState();
+        setSettingsStatus('Settings loaded.');
+      } catch (err) {
+        setSettingsStatus(String(err?.message || err || 'Could not load settings'), true);
+      }
+    }
+
+    function closeSettingsModal() {
+      settingsModal.classList.add('hidden');
+    }
+
+    async function saveLlmSettings({ activateProfile = false } = {}) {
+      const payload = {
+        ...collectLlmSettingsForm(),
+        active_profile_id: activateProfile ? (profileSelect.value || '') : '',
+        silence_triggers_enabled: Boolean(silenceTriggersEnabled?.checked),
+        disable_opening_message: !Boolean(disableOpeningMessage?.checked),
+        disable_thinking: Boolean(disableThinkingInput?.checked),
+        system_prompt: systemPromptInput?.value || null,
+      };
+      const res = await fetch('/api/llm-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.error || `Save failed (${res.status})`);
+      }
+      llmSettingsState = data;
+      renderProviderOptions(data);
+      renderProfileOptions(data);
+      fillLlmSettingsForm(data.active_settings || {}, data.vox_tts_settings || {});
+      if (silenceTriggersEnabled) silenceTriggersEnabled.checked = Boolean(data.silence_triggers_enabled);
+      if (disableOpeningMessage) disableOpeningMessage.checked = !Boolean(data.disable_opening_message);
+      syncProviderSpecificUi(data.active_settings || {});
+      setSettingsStatus(`Active model: ${data.active_settings?.model || 'updated'}`);
+    }
+
+    async function saveCurrentProfile() {
+      const profileName = profileNameInput.value.trim() || prompt('Profile name:', modelInput.value.trim() || 'Custom Profile');
+      if (!profileName) return;
+      const res = await fetch('/api/llm-profiles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profile_name: profileName, settings: collectLlmSettingsForm() }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.error || `Profile save failed (${res.status})`);
+      }
+      llmSettingsState = data.state;
+      renderProviderOptions(data.state);
+      renderProfileOptions(data.state);
+      profileSelect.value = data.profile_id;
+      profileNameInput.value = profileName;
+      setSettingsStatus(`Saved profile: ${profileName}`);
+    }
+
+    async function resetSystemPromptToDefault() {
+      const res = await fetch('/api/llm-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reset_system_prompt: true }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.error || `Reset failed (${res.status})`);
+      }
+      llmSettingsState = data;
+      renderProviderOptions(data);
+      renderProfileOptions(data);
+      fillLlmSettingsForm(data.active_settings || {});
+      if (silenceTriggersEnabled) silenceTriggersEnabled.checked = Boolean(data.silence_triggers_enabled);
+      if (disableOpeningMessage) disableOpeningMessage.checked = !Boolean(data.disable_opening_message);
+      if (systemPromptInput && typeof data.system_prompt === 'string') {
+        systemPromptInput.value = data.system_prompt;
+      }
+      setSettingsStatus('System prompt reset to maya.md');
+    }
+
     // ─── Orb state ────────────────────────────────────────────────────────
     let currentState = 'idle';
     function commitOrbState(state) {
@@ -1506,27 +2369,65 @@
       commitOrbState(state);
     }
 
+    function getRingBaseState(state) {
+      switch (state) {
+        case 'listening':
+          return {
+            opacities: [0.48, 0.28, 0.14],
+            scales: [1.01, 1.03, 1.05],
+          };
+        case 'thinking':
+          return {
+            opacities: [0.34, 0.20, 0.10],
+            scales: [1.025, 1.05, 1.08],
+          };
+        case 'speaking':
+          return {
+            opacities: [0.56, 0.34, 0.18],
+            scales: [1.08, 1.12, 1.16],
+          };
+        default:
+          return {
+            opacities: [0.16, 0.09, 0.04],
+            scales: [1.0, 1.02, 1.04],
+          };
+      }
+    }
+
+    function applyRingState(state, intensity = 0) {
+      const level = Math.max(0, Math.min(1, Number(intensity) || 0));
+      const levelBucket = Math.round(level * 20) / 20;
+      const stateKey = `${state}:${levelBucket.toFixed(2)}`;
+      if (stateKey === lastAppliedRingStateKey) return;
+      lastAppliedRingStateKey = stateKey;
+      const base = getRingBaseState(state);
+      const extraOpacity = state === 'idle'
+        ? [0.10, 0.06, 0.03]
+        : state === 'listening'
+          ? [0.42, 0.26, 0.14]
+          : state === 'thinking'
+            ? [0.18, 0.10, 0.06]
+            : [0.24, 0.14, 0.08];
+      const extraScale = state === 'idle'
+        ? [0.03, 0.025, 0.02]
+        : state === 'listening'
+          ? [0.08, 0.06, 0.04]
+          : state === 'thinking'
+            ? [0.04, 0.03, 0.02]
+            : [0.05, 0.04, 0.03];
+      const rings = [ring1, ring2, ring3];
+      rings.forEach((ring, index) => {
+        ring.style.opacity = String(base.opacities[index] + extraOpacity[index] * level);
+        ring.style.transform = `scale(${base.scales[index] + extraScale[index] * level})`;
+      });
+    }
+
     function animateRingsWithLevel(level) {
-      const boosted = Math.max(0, Math.min(1, Number(level) || 0));
-      const opacity = 0.3 + boosted * 0.7;
-      const scale1 = 1 + boosted * 0.08;
-      const scale2 = 1 + boosted * 0.06;
-      const scale3 = 1 + boosted * 0.04;
-      ring1.style.opacity = opacity;
-      ring1.style.transform = `scale(${scale1})`;
-      ring2.style.opacity = opacity * 0.7;
-      ring2.style.transform = `scale(${scale2})`;
-      ring3.style.opacity = opacity * 0.5;
-      ring3.style.transform = `scale(${scale3})`;
+      applyRingState(currentState, level);
     }
 
     function resetRings() {
-      ring1.style.opacity = '0';
-      ring1.style.transform = 'scale(1)';
-      ring2.style.opacity = '0';
-      ring2.style.transform = 'scale(1)';
-      ring3.style.opacity = '0';
-      ring3.style.transform = 'scale(1)';
+      applyRingState(currentState, 0);
     }
 
     function startAmbientPulse() {
@@ -1539,13 +2440,7 @@
             if (elapsed > 1200) return;
             const progress = elapsed / 1200;
             const wave = Math.sin(progress * Math.PI);
-            const opacity = 0.15 + wave * 0.35;
-            ring1.style.opacity = opacity;
-            ring1.style.transform = `scale(${1 + wave * 0.05})`;
-            ring2.style.opacity = opacity * 0.7;
-            ring2.style.transform = `scale(${1 + wave * 0.04})`;
-            ring3.style.opacity = opacity * 0.4;
-            ring3.style.transform = `scale(${1 + wave * 0.03})`;
+            applyRingState(currentState, wave * 0.6);
             requestAnimationFrame(pulse);
           }
           pulse();
@@ -1560,7 +2455,7 @@
     }
 
     function samplePlaybackLevel() {
-      if (!playbackAnalyser || !playbackDataArray || !activeSources.length) return 0;
+      if (!playbackAnalyser || !playbackDataArray || !isAudioPlaybackActive()) return 0;
       playbackAnalyser.getByteFrequencyData(playbackDataArray);
       let sum = 0;
       const sampleCount = Math.min(40, playbackDataArray.length);
@@ -1586,18 +2481,27 @@
     function animateBlobWithLevel(level) {
       const boosted = Math.max(0, Math.min(1, Number(level) || 0));
       const scale = 1 + boosted * 0.12;
+      if (Math.abs(scale - lastBlobScale) < 0.006) return;
+      lastBlobScale = scale;
       orb.style.transform = `scale(${scale})`;
     }
 
     function resetBlob() {
+      lastBlobScale = 1;
       orb.style.transform = 'scale(1)';
     }
 
     function startOrbVisualization() {
       if (orbVizFrame) return;
       const animate = () => {
+        const now = performance.now();
+        if (now - lastOrbVizAt < 33) {
+          orbVizFrame = requestAnimationFrame(animate);
+          return;
+        }
+        lastOrbVizAt = now;
         const userTarget = (isConnected && !isMicMuted) ? pendingUserLevel : 0;
-        const assistantTarget = (isConnected && !isAiMuted) ? samplePlaybackLevel() : 0;
+        const assistantTarget = (isConnected && !isAiMuted && now >= playbackReactiveDelayUntil) ? samplePlaybackLevel() : 0;
 
         smoothedUserLevel = Math.max(userTarget, smoothedUserLevel * 0.82);
         smoothedAssistantLevel = Math.max(assistantTarget, smoothedAssistantLevel * 0.86);
@@ -1605,8 +2509,8 @@
 
         if (currentState === 'listening' && isConnected && !isMicMuted) {
           animateRingsWithLevel(smoothedUserLevel);
-        } else if (currentState !== 'thinking' && currentState !== 'speaking') {
-          resetRings();
+        } else {
+          applyRingState(currentState, 0);
         }
 
         if (currentState === 'speaking' && isConnected && !isAiMuted) {
@@ -1622,9 +2526,11 @@
     function stopOrbVisualization() {
       if (orbVizFrame) cancelAnimationFrame(orbVizFrame);
       orbVizFrame = null;
+      lastOrbVizAt = 0;
       pendingUserLevel = 0;
       smoothedUserLevel = 0;
       smoothedAssistantLevel = 0;
+      lastAppliedRingStateKey = '';
       stopAmbientPulse();
       resetRings();
       resetBlob();
@@ -1712,7 +2618,30 @@
         aiBtn.setAttribute('aria-pressed', isAiMuted ? 'true' : 'false');
         aiBtn.title = isAiMuted ? 'Unmute AI audio' : 'Mute AI audio';
       }
+      if (textModeBtn) {
+        textModeBtn.classList.toggle('muted', isTextMode);
+        textModeBtn.setAttribute('aria-pressed', isTextMode ? 'true' : 'false');
+        textModeBtn.title = isTextMode ? 'Disable text input' : 'Enable text input';
+      }
       updatePlaybackMute();
+    }
+
+    function syncTranscriptUi() {
+      const textModeActive = Boolean(isTextMode && isConnected);
+      transcriptBox?.classList.toggle('hidden', textModeActive);
+      textChatBox?.classList.toggle('hidden', !textModeActive);
+      if (textChatSendBtn) {
+        textChatSendBtn.disabled = !textModeActive || !socket?.connected || !voiceStreamReady;
+      }
+      if (textModeActive) {
+        transcriptArea.classList.remove('inactive');
+      }
+    }
+
+    function persistTextMode() {
+      try {
+        localStorage.setItem(STORAGE_TEXT_MODE, isTextMode ? '1' : '0');
+      } catch { }
     }
 
     function toggleMicMute(event) {
@@ -1723,6 +2652,7 @@
       isMicMuted = !isMicMuted;
       syncControlUi();
       if (isMicMuted) resetRings();
+      socket.emit('client:mic_toggle', { muted: isMicMuted });
     }
 
     function toggleAiMute(event) {
@@ -1732,6 +2662,19 @@
       if (!socket) return;
       isAiMuted = !isAiMuted;
       syncControlUi();
+    }
+
+    function toggleTextMode(event) {
+      event?.preventDefault?.();
+      event?.stopPropagation?.();
+      event?.stopImmediatePropagation?.();
+      isTextMode = !isTextMode;
+      persistTextMode();
+      syncControlUi();
+      syncTranscriptUi();
+      if (isTextMode) {
+        textChatInput?.focus();
+      }
     }
 
     // ─── Transcript helpers ───────────────────────────────────────────────
@@ -1755,6 +2698,29 @@
           }, 1200);
         }, 2200);
       }
+    }
+
+    function sendTypedMessage() {
+      if (!socket?.connected || !voiceStreamReady) return;
+      const text = String(textChatInput?.value || '').trim();
+      if (!text) return;
+      if (isAudioPlaybackActive() || currentAssistantMessageId || assistantFinished === false) {
+        flushAudio();
+        setOrbState('listening');
+      }
+      // Show the sent text immediately in the transcript area so the user sees
+      // their interruption visually — same feedback as voice barge-in.
+      transcriptArea.classList.remove('inactive');
+      transcriptBox.classList.remove('empty');
+      transcriptBox.classList.add('live');
+      userTranscript.classList.remove('fading');
+      clearTimeout(fadeTimer);
+      userTranscript.textContent = text;
+      if (textChatInput) {
+        textChatInput.value = '';
+        textChatInput.style.height = '';
+      }
+      socket.emit('client:text_message', { chatId, text });
     }
 
     // ─── Toggle call ─────────────────────────────────────────────────────
@@ -1807,14 +2773,145 @@
 
         // Create AudioContexts early (Safari/iOS can require user-gesture timing).
         audioContext = new AudioContext({ sampleRate: 16000 });
-        playbackCtx = new AudioContext({ sampleRate: 44100 });
+        playbackCtx = new AudioContext({ sampleRate: 48000 });
         playbackGainNode = playbackCtx.createGain();
         playbackGainNode.gain.value = isAiMuted ? 0 : 1;
         playbackAnalyser = playbackCtx.createAnalyser();
-        playbackAnalyser.fftSize = 256;
+        playbackAnalyser.fftSize = 128;
         playbackDataArray = new Uint8Array(playbackAnalyser.frequencyBinCount);
-        playbackGainNode.connect(playbackAnalyser);
-        playbackAnalyser.connect(playbackCtx.destination);
+        const connectPlaybackTail = (node) => {
+          node.connect(playbackGainNode);
+          playbackGainNode.connect(playbackAnalyser);
+          playbackAnalyser.connect(playbackCtx.destination);
+        };
+
+        if (playbackCtx.audioWorklet) {
+          const workletInitialBufferSeconds = 0.12;
+          const workletSource = `
+            class MayaPcmQueueProcessor extends AudioWorkletProcessor {
+              constructor() {
+                super();
+                this.queue = [];
+                this.queuedFrames = 0;
+                this.started = false;
+                this.underruns = 0;
+                this.drained = true;
+                this.initialBufferFrames = Math.floor(sampleRate * ${workletInitialBufferSeconds});
+                this.port.onmessage = (event) => {
+                  const msg = event.data || {};
+                  if (msg.type === 'enqueue' && msg.samples) {
+                    const chunk = new Float32Array(msg.samples);
+                    if (chunk.length) {
+                      this.queue.push(chunk);
+                      this.queuedFrames += chunk.length;
+                      this.drained = false;
+                    }
+                  } else if (msg.type === 'flush') {
+                    this.queue = [];
+                    this.queuedFrames = 0;
+                    this.started = false;
+                    this.underruns = 0;
+                    this.drained = true;
+                  } else if (msg.type === 'buffer' && Number.isFinite(msg.seconds)) {
+                    this.initialBufferFrames = Math.max(0, Math.floor(sampleRate * Number(msg.seconds)));
+                  }
+                };
+              }
+              process(inputs, outputs) {
+                const out = outputs[0][0];
+                out.fill(0);
+                if (!this.started) {
+                  if (this.queuedFrames < this.initialBufferFrames) return true;
+                  this.started = true;
+                  this.port.postMessage({ type: 'started' });
+                }
+                let offset = 0;
+                while (offset < out.length) {
+                  if (!this.queue.length) {
+                    if (this.started && !this.drained) {
+                      this.drained = true;
+                      this.port.postMessage({ type: 'drained' });
+                    }
+                    this.underruns += 1;
+                    this.port.postMessage({ type: 'underrun', count: this.underruns });
+                    break;
+                  }
+                  const head = this.queue[0];
+                  const take = Math.min(out.length - offset, head.length);
+                  out.set(head.subarray(0, take), offset);
+                  offset += take;
+                  this.queuedFrames -= take;
+                  if (take === head.length) {
+                    this.queue.shift();
+                  } else {
+                    this.queue[0] = head.subarray(take);
+                  }
+                }
+                return true;
+              }
+            }
+            registerProcessor('maya-pcm-queue-processor', MayaPcmQueueProcessor);
+          `;
+          const blob = new Blob([workletSource], { type: 'application/javascript' });
+          const url = URL.createObjectURL(blob);
+          try {
+            await playbackCtx.audioWorklet.addModule(url);
+            playbackWorkletNode = new AudioWorkletNode(playbackCtx, 'maya-pcm-queue-processor', {
+              numberOfInputs: 0,
+              numberOfOutputs: 1,
+              outputChannelCount: [1]
+            });
+            playbackWorkletNode.port.onmessage = (event) => {
+              const msg = event.data || {};
+              if (msg.type === 'underrun') playbackUnderruns = Number(msg.count || 0);
+              if (msg.type === 'started') playbackStarted = true;
+              if (msg.type === 'drained') {
+                playbackQueuedSamples = 0;
+                playbackStarted = false;
+                if (assistantFinished) setOrbState('listening');
+              }
+            };
+            playbackWorkletNode.port.postMessage({ type: 'buffer', seconds: workletInitialBufferSeconds });
+            connectPlaybackTail(playbackWorkletNode);
+          } finally {
+            URL.revokeObjectURL(url);
+          }
+        }
+
+        if (!playbackWorkletNode) {
+          playbackProcessorNode = playbackCtx.createScriptProcessor(4096, 0, 1);
+          playbackProcessorNode.onaudioprocess = (event) => {
+            const out = event.outputBuffer.getChannelData(0);
+            out.fill(0);
+            if (!playbackStarted) {
+              if (playbackQueuedSamples < Math.floor(playbackCtx.sampleRate * playbackStartupBufferSeconds)) return;
+              playbackStarted = true;
+            }
+            let offset = 0;
+            while (offset < out.length) {
+              if (!playbackPcmQueue.length) {
+                if (playbackStarted) playbackUnderruns += 1;
+                break;
+              }
+              const head = playbackPcmQueue[0];
+              const take = Math.min(out.length - offset, head.length);
+              out.set(head.subarray(0, take), offset);
+              offset += take;
+              playbackQueuedSamples -= take;
+              if (take === head.length) {
+                playbackPcmQueue.shift();
+              } else {
+                playbackPcmQueue[0] = head.subarray(take);
+              }
+            }
+            if (assistantFinished && playbackStarted && playbackQueuedSamples <= 0 && !playbackPcmQueue.length) {
+              playbackStarted = false;
+              setOrbState('listening');
+            }
+          };
+          connectPlaybackTail(playbackProcessorNode);
+        }
+
         nextPlayTime = 0;
         try { await audioContext.resume(); } catch { }
         try { await playbackCtx.resume(); } catch { }
@@ -1872,6 +2969,7 @@
           isConnected = true;
           syncStatusDot();
           setActiveCallUi(true);
+          syncTranscriptUi();
           setOrbState('listening');
           startTimer();
           transcriptArea.classList.remove('inactive');
@@ -1901,7 +2999,7 @@
           if (d?.chatId && d.chatId !== chatId) return;
           if (vadFlushTimer) clearTimeout(vadFlushTimer);
           // Debounce + only flush if we're actually playing AI audio.
-          if (activeSources.length > 0) {
+          if (isAudioPlaybackActive()) {
             vadFlushTimer = setTimeout(() => {
               flushAudio();
               vadFlushTimer = null;
@@ -1941,6 +3039,8 @@
         socket.on('server:assistant_message_started', (d) => {
           if (d?.chatId && d.chatId !== chatId) return;
           assistantFinished = false;
+          resetPlaybackStartupState();
+          playbackReactiveDelayUntil = performance.now() + 220;
           setOrbState('speaking');
           if (d?.messageId) {
             currentAssistantMessageId = d.messageId;
@@ -1989,7 +3089,7 @@
           }
           if (d?.messageId && currentAssistantMessageId === d.messageId) currentAssistantMessageId = null;
           // If there is no audio scheduled/playing, we can return to listening immediately.
-          if (activeSources.length === 0) setOrbState('listening');
+          if (!isAudioPlaybackActive()) setOrbState('listening');
         });
 
         socket.on('server:assistant_message_cancelled', (d) => {
@@ -2021,6 +3121,8 @@
           userTranscript.textContent = '…';
           transcriptBox.classList.add('empty');
           transcriptBox.classList.remove('live');
+          if (textChatInput) textChatInput.value = '';
+          syncTranscriptUi();
           setOrbState('listening');
         });
 
@@ -2073,17 +3175,63 @@
       }
     }
 
+    // Two-step clear: first click → "Are you sure?" (red), second click → clear (green)
+    let clearMemoryConfirming = false;
+    let clearMemoryConfirmTimer = null;
+
     function clearContext() {
+      // Step 1: Show confirmation
+      if (!clearMemoryConfirming) {
+        clearMemoryConfirming = true;
+        clearMemoryBtn.textContent = 'Are you sure?';
+        clearMemoryBtn.classList.add('confirming');
+        clearTimeout(clearMemoryConfirmTimer);
+        clearMemoryConfirmTimer = setTimeout(() => {
+          clearMemoryConfirming = false;
+          clearMemoryBtn.textContent = 'Clear Memory';
+          clearMemoryBtn.classList.remove('confirming');
+        }, 4000);
+        return;
+      }
+
+      // Step 2: Actually clear
+      clearMemoryConfirming = false;
+      clearTimeout(clearMemoryConfirmTimer);
+
       flushAudio();
       userTranscript.textContent = '…';
       transcriptBox.classList.add('empty');
       transcriptBox.classList.remove('live');
       clearLocalMemory();
+      // Generate a fresh chatId so the next call starts clean
+      chatId = getOrCreateChatId();
+      // Reset conversation state
+      assistantFinished = false;
+      currentAssistantMessageId = null;
+      // Green confirmation feedback
+      clearMemoryBtn.textContent = '✓ Cleared!';
+      clearMemoryBtn.classList.remove('confirming');
+      clearMemoryBtn.classList.add('cleared');
+      setTimeout(() => {
+        clearMemoryBtn.textContent = 'Clear Memory';
+        clearMemoryBtn.classList.remove('cleared');
+      }, 2000);
+      // Also show in transcript area
+      setOrbState('idle');
+      transcriptBox.classList.remove('empty');
+      transcriptBox.classList.add('live');
+      userTranscript.textContent = '🧠 Memory cleared — tap to start fresh';
+      setTimeout(() => {
+        userTranscript.textContent = '…';
+        transcriptBox.classList.add('empty');
+        transcriptBox.classList.remove('live');
+      }, 2500);
       if (socket?.connected) socket.emit('client:clear_context', { chatId });
     }
 
     try {
       userName = localStorage.getItem('maya_user_name') || '';
+      isTextMode = localStorage.getItem(STORAGE_TEXT_MODE) === '1';
     } catch { }
     updateNameUi();
     nameHint?.classList.remove('hidden');
@@ -2099,6 +3247,70 @@
     aiBtn?.addEventListener('pointerdown', (event) => {
       event.preventDefault();
       event.stopPropagation();
+    });
+    textModeBtn?.addEventListener('click', toggleTextMode);
+    textModeBtn?.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    });
+    textChatSendBtn?.addEventListener('click', sendTypedMessage);
+    textChatInput?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendTypedMessage();
+      }
+    });
+    textChatInput?.addEventListener('input', () => {
+      textChatInput.style.height = 'auto';
+      textChatInput.style.height = `${Math.min(120, Math.max(54, textChatInput.scrollHeight))}px`;
+    });
+    settingsBtn?.addEventListener('click', openSettingsModal);
+    closeSettingsBtn?.addEventListener('click', closeSettingsModal);
+    settingsModal?.addEventListener('click', (event) => {
+      if (event.target === settingsModal) closeSettingsModal();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !settingsModal?.classList.contains('hidden')) {
+        closeSettingsModal();
+      }
+    });
+    profileSelect?.addEventListener('change', () => {
+      applyProfileById(profileSelect.value);
+    });
+    toggleApiKeyBtn?.addEventListener('click', () => {
+      const showing = apiKeyInput.type === 'text';
+      apiKeyInput.type = showing ? 'password' : 'text';
+      toggleApiKeyBtn.textContent = showing ? 'Show' : 'Hide';
+    });
+    saveProfileBtn?.addEventListener('click', async () => {
+      setSettingsStatus('Saving profile…');
+      try {
+        await saveCurrentProfile();
+      } catch (err) {
+        setSettingsStatus(String(err?.message || err || 'Could not save profile'), true);
+      }
+    });
+    saveActivateBtn?.addEventListener('click', async () => {
+      setSettingsStatus('Saving and activating…');
+      try {
+        await saveLlmSettings({ activateProfile: true });
+      } catch (err) {
+        setSettingsStatus(String(err?.message || err || 'Could not activate settings'), true);
+      }
+    });
+    baseUrlInput?.addEventListener('input', () => {
+      syncProviderSpecificUi(collectLlmSettingsForm());
+    });
+    modelInput?.addEventListener('input', () => {
+      syncProviderSpecificUi(collectLlmSettingsForm());
+    });
+    resetSystemPromptBtn?.addEventListener('click', async () => {
+      setSettingsStatus('Resetting system prompt…');
+      try {
+        await resetSystemPromptToDefault();
+      } catch (err) {
+        setSettingsStatus(String(err?.message || err || 'Could not reset system prompt'), true);
+      }
     });
 
 
@@ -2127,7 +3339,8 @@
 
       socket = null; mediaStream = null; audioContext = null;
       micSourceNode = null;
-      workletNode = null; playbackCtx = null; playbackGainNode = null; playbackAnalyser = null; playbackDataArray = null; nextPlayTime = 0;
+      workletNode = null; playbackCtx = null; playbackGainNode = null; playbackAnalyser = null; playbackProcessorNode = null; playbackWorkletNode = null; playbackDataArray = null; nextPlayTime = 0;
+      playbackPcmQueue = []; playbackQueuedSamples = 0; playbackStarted = false; playbackUnderruns = 0;
       isConnected = false;
       voiceStreamReady = false;
       activeCallId = null;
@@ -2141,10 +3354,24 @@
       userTranscript.textContent = '…';
       transcriptBox.classList.add('empty');
       transcriptBox.classList.remove('live');
+      syncTranscriptUi();
       isStoppingCall = false;
     }
 
     // ─── Gapless audio playback ───────────────────────────────────────────
+    function isAudioPlaybackActive() {
+      return activeSources.length > 0 || playbackStarted || playbackQueuedSamples > 0 || playbackPcmQueue.length > 0;
+    }
+
+    function resetPlaybackStartupState() {
+      playbackStartupBufferSeconds = 0.12;
+      playbackStartupChunkCount = 0;
+      playbackStartupFirstChunkAt = 0;
+      if (playbackWorkletNode) {
+        try { playbackWorkletNode.port.postMessage({ type: 'buffer', seconds: playbackStartupBufferSeconds }); } catch { }
+      }
+    }
+
     function queueAudio(int16, sampleRate) {
       if (!playbackCtx) return;
       if (playbackCtx.state === 'suspended') {
@@ -2153,24 +3380,37 @@
       const float32 = new Float32Array(int16.length);
       for (let i = 0; i < int16.length; i++) float32[i] = int16[i] / 32768;
 
-      const buf = playbackCtx.createBuffer(1, float32.length, sampleRate);
-      buf.getChannelData(0).set(float32);
-
-      const now = playbackCtx.currentTime;
-      if (nextPlayTime < now) nextPlayTime = now;
-
-      const src = playbackCtx.createBufferSource();
-      src.buffer = buf;
-      src.connect(playbackGainNode || playbackCtx.destination);
-      src.start(nextPlayTime);
-      activeSources.push(src);
-      src.onended = () => {
-        activeSources = activeSources.filter(s => s !== src);
-        if (assistantFinished && activeSources.length === 0) {
-          setOrbState('listening');
+      if (!playbackStarted) {
+        const now = performance.now();
+        playbackStartupChunkCount += 1;
+        if (!playbackStartupFirstChunkAt) {
+          playbackStartupFirstChunkAt = now;
+          playbackStartupBufferSeconds = 0.12;
+        } else if (playbackStartupChunkCount === 2) {
+          const gapSeconds = Math.max(0, (now - playbackStartupFirstChunkAt) / 1000);
+          const adaptiveTarget = Math.max(0.10, Math.min(0.18, 0.04 + (gapSeconds * 2.0)));
+          playbackStartupBufferSeconds = adaptiveTarget;
         }
-      };
-      nextPlayTime += buf.duration;
+        if (playbackWorkletNode) {
+          try { playbackWorkletNode.port.postMessage({ type: 'buffer', seconds: playbackStartupBufferSeconds }); } catch { }
+        }
+      }
+
+      if (sampleRate !== Math.round(playbackCtx.sampleRate)) {
+        console.warn('[Audio] sample-rate mismatch', { sampleRate, contextRate: playbackCtx.sampleRate });
+      }
+      if (playbackWorkletNode) {
+        try {
+          playbackQueuedSamples += float32.length;
+          playbackWorkletNode.port.postMessage({ type: 'enqueue', samples: float32.buffer }, [float32.buffer]);
+        } catch {
+          playbackPcmQueue.push(float32);
+          playbackQueuedSamples += float32.length;
+        }
+      } else {
+        playbackPcmQueue.push(float32);
+        playbackQueuedSamples += float32.length;
+      }
     }
 
     function flushAudio() {
@@ -2181,6 +3421,14 @@
         }
       } catch { }
       activeSources = [];
+      playbackPcmQueue = [];
+      playbackQueuedSamples = 0;
+      playbackStarted = false;
+      playbackUnderruns = 0;
+      if (playbackWorkletNode) {
+        try { playbackWorkletNode.port.postMessage({ type: 'flush' }); } catch { }
+      }
+      resetPlaybackStartupState();
       nextPlayTime = playbackCtx.currentTime;
       assistantFinished = false;
     }

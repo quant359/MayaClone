@@ -77,7 +77,7 @@ print_openrouter_help() {
   info "1. Sign in to OpenRouter."
   info "2. Create an API key and optionally set a credit limit."
   info "3. Use base URL https://openrouter.ai/api/v1."
-  info "4. Recommended model for MayaClone: moonshotai/kimi-k2-instruct-0905."
+  info "4. Pick any OpenAI-compatible chat model you want to use."
 }
 
 print_groq_help() {
@@ -116,27 +116,27 @@ print_tts_docker_help() {
   esac
 
   echo -e "  ${BOLD}  Docker TTS Setup${NC}"
-  info "MayaClone expects a TTS server at TTS_ENDPOINT."
+  info "MayaClone expects the Vox voice server at TTS_ENDPOINT."
   info "Current TTS endpoint: ${current_tts_endpoint}"
-  info "Recommended public image: quant359/echo-tts-maya:latest"
-  echo -e "  ${DIM}Requirements:${NC} Docker + NVIDIA Container Toolkit + NVIDIA GPU with about 12 GB VRAM"
+  info "Recommended public image: quant359/voxmaya-v1:latest"
+  echo -e "  ${DIM}Requirements:${NC} Docker + NVIDIA Container Toolkit + NVIDIA GPU"
   echo ""
 
   if [ "$is_local_tts" = "1" ]; then
     info "Pull the image:"
-    echo "    docker pull quant359/echo-tts-maya:latest"
+    echo "    docker pull quant359/voxmaya-v1:latest"
     echo ""
     info "Run the container:"
     echo "    docker run -d \\"
-    echo "      --name echo-tts-maya \\"
+    echo "      --name voxmaya-v1 \\"
     echo "      --restart unless-stopped \\"
     echo "      --gpus all \\"
     echo "      -p 8002:8002 \\"
-    echo "      -v echo_tts_cache:/var/cache/echo-tts \\"
-    echo "      quant359/echo-tts-maya:latest"
+    echo "      -v voxmaya_outputs:/data/outputs \\"
+    echo "      quant359/voxmaya-v1:latest"
     echo ""
   else
-    info "You selected a remote TTS server, so MayaClone will not use localhost."
+    info "You selected a remote Vox server, so MayaClone will not use localhost."
     info "Make sure that host is reachable from this machine and that port 8002 is open."
     echo ""
   fi
@@ -225,9 +225,9 @@ if [ "$CONFIGURED" -eq 0 ] || [ "$RECONFIGURE" -eq 1 ]; then
 
   # LLM
   echo -e "${BOLD}  LLM Provider${NC}"
-  echo -e "  ${CYAN}1)${NC} OpenRouter ${DIM}(wide model selection, recommended default)${NC}"
-  echo -e "  ${CYAN}2)${NC} Groq       ${DIM}(free tier, fast)${NC}"
-  echo -e "  ${CYAN}3)${NC} OpenAI     ${DIM}(GPT-4o)${NC}"
+  echo -e "  ${CYAN}1)${NC} OpenRouter ${DIM}(easy starting point, many models)${NC}"
+  echo -e "  ${CYAN}2)${NC} Groq       ${DIM}(optional alternative)${NC}"
+  echo -e "  ${CYAN}3)${NC} OpenAI     ${DIM}(direct OpenAI API)${NC}"
   echo -e "  ${CYAN}4)${NC} Gemini     ${DIM}(Google OpenAI-compatible endpoint)${NC}"
   echo -e "  ${CYAN}5)${NC} Custom     ${DIM}(Ollama, vLLM, etc.)${NC}"
   CURRENT_LLM_BASE_URL="$(env_get LLM_BASE_URL)"
@@ -250,15 +250,15 @@ if [ "$CONFIGURED" -eq 0 ] || [ "$RECONFIGURE" -eq 1 ]; then
       env_set "LLM_BASE_URL" "https://openrouter.ai/api/v1"
       print_openrouter_help
       ask "OpenRouter key [Enter to keep current]: "; read -r K; [ -n "$K" ] && env_set "LLM_API_KEY" "$K"
-      ask "Model [default=${CURRENT_LLM_MODEL:-moonshotai/kimi-k2-instruct-0905}]: "; read -r M
-      M="${M:-${CURRENT_LLM_MODEL:-moonshotai/kimi-k2-instruct-0905}}"; env_set "LLM_MODEL" "$M"
+      ask "Model [default=${CURRENT_LLM_MODEL:-openai/gpt-4o-mini}]: "; read -r M
+      M="${M:-${CURRENT_LLM_MODEL:-openai/gpt-4o-mini}}"; env_set "LLM_MODEL" "$M"
       ok "OpenRouter configured";;
     2)
       env_set "LLM_BASE_URL" "https://api.groq.com/openai/v1"
       print_groq_help
       ask "Groq key [Enter to keep current]: "; read -r K; [ -n "$K" ] && env_set "LLM_API_KEY" "$K"
-      ask "Model [default=${CURRENT_LLM_MODEL:-moonshotai/kimi-k2-instruct-0905}]: "; read -r M
-      M="${M:-${CURRENT_LLM_MODEL:-moonshotai/kimi-k2-instruct-0905}}"; env_set "LLM_MODEL" "$M"
+      ask "Model [default=${CURRENT_LLM_MODEL:-llama-3.3-70b-versatile}]: "; read -r M
+      M="${M:-${CURRENT_LLM_MODEL:-llama-3.3-70b-versatile}}"; env_set "LLM_MODEL" "$M"
       ok "Groq configured";;
     3)
       env_set "LLM_BASE_URL" "https://api.openai.com/v1"
@@ -295,9 +295,12 @@ if [ "$CONFIGURED" -eq 0 ] || [ "$RECONFIGURE" -eq 1 ]; then
   # TTS endpoint
   CURRENT_TTS_ENDPOINT="$(env_get TTS_ENDPOINT)"
   CURRENT_TTS_ENDPOINT="${CURRENT_TTS_ENDPOINT:-http://localhost:8002}"
+  env_set "TTS_BACKEND" "vox"
   echo -e "${BOLD}  TTS Endpoint${NC}"
-  info "Current TTS endpoint: ${CURRENT_TTS_ENDPOINT}"
-  info "Examples: http://localhost:8002 or https://your-host.example"
+  info "This MayaClone build uses Vox only."
+  info "Current Vox endpoint: ${CURRENT_TTS_ENDPOINT}"
+  info "Local default: http://localhost:8002"
+  info "Remote example: http://your-server-ip:8002"
   ask "Change TTS endpoint? [y/N]: "
   read -r CHANGE_TTS_ENDPOINT
   if [[ "$CHANGE_TTS_ENDPOINT" =~ ^[Yy] ]]; then
@@ -363,9 +366,9 @@ fi
 # ─── TTS check ────────────────────────────────────────────────────────────────
 TTS_EP="${TTS_ENDPOINT:-http://localhost:8002}"
 if curl -sf --max-time 5 "${TTS_EP}/health" &>/dev/null || curl -sf --max-time 5 "${TTS_EP}/v1/health" &>/dev/null; then
-  ok "TTS backend reachable at ${TTS_EP}"
+  ok "Vox server reachable at ${TTS_EP}"
 else
-  warn "TTS backend not reachable at ${TTS_EP} — speech output will fail until it is running"
+  warn "Vox server not reachable at ${TTS_EP} — speech output will fail until it is running"
   echo ""
   print_tts_docker_help "$TTS_EP"
   echo ""
